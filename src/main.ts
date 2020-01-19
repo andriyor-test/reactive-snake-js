@@ -1,11 +1,5 @@
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { animationFrame } from 'rxjs/scheduler/animationFrame';
-
-import { interval } from 'rxjs/observable/interval';
-import { fromEvent } from 'rxjs/observable/fromEvent';
-import { combineLatest } from 'rxjs/observable/combineLatest';
-import { of } from 'rxjs/observable/of';
+import { Observable ,  BehaviorSubject ,  interval ,  fromEvent ,  combineLatest ,  of } from 'rxjs';
+import { animationFrameScheduler } from 'rxjs';
 
 import {
   map,
@@ -107,7 +101,7 @@ function createGame(fps$: Observable<number>): Observable<Scene> {
 }
 
 let game$ = of('Start Game').pipe(
-  map(() => interval(1000 / FPS, animationFrame)),
+  map(() => interval(1000 / FPS, animationFrameScheduler)),
   switchMap(createGame),
   takeWhile(scene => !isGameOver(scene))
 );
