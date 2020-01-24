@@ -1,6 +1,4 @@
-import { Observable,  BehaviorSubject ,  interval ,  fromEvent ,  combineLatest ,  of } from 'rxjs';
-import { animationFrameScheduler } from 'rxjs';
-
+import { BehaviorSubject, animationFrameScheduler,  interval,  fromEvent,  combineLatest,  of } from 'rxjs';
 import {
   map,
   filter,
@@ -21,12 +19,7 @@ import { DIRECTIONS, SPEED, SNAKE_LENGTH, FPS, APPLE_COUNT, POINTS_PER_APPLE } f
 import {
   createCanvasElement,
   renderScene,
-  renderApples,
-  renderSnake,
-  renderScore,
   renderGameOver,
-  getRandomPosition,
-  checkCollision
 } from './canvas';
 
 import {
@@ -38,16 +31,9 @@ import {
   generateApples
 } from './utils';
 
-/**
- * Create canvas element and append it to the page
- */
 let canvas = createCanvasElement();
 let ctx = canvas.getContext('2d');
 document.body.appendChild(canvas);
-
-/**
- * Starting values
- */
 const INITIAL_DIRECTION = DIRECTIONS.ArrowRight;
 
 let ticks$ = interval(SPEED);
