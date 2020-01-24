@@ -1,4 +1,4 @@
-import { BehaviorSubject, animationFrameScheduler,  interval,  fromEvent,  combineLatest,  of } from 'rxjs';
+import {BehaviorSubject, animationFrameScheduler, interval, fromEvent, combineLatest, of, timer} from 'rxjs';
 import {
   map,
   filter,
@@ -11,15 +11,14 @@ import {
   skip,
   switchMap,
   takeWhile,
-  first
 } from 'rxjs/operators';
 
-import { DIRECTIONS, SPEED, SNAKE_LENGTH, FPS, APPLE_COUNT, POINTS_PER_APPLE } from './constants';
+import { DIRECTIONS, SPEED, SNAKE_LENGTH, FPS, POINTS_PER_APPLE } from './constants';
 
 import {
   createCanvasElement,
   renderScene,
-  renderGameOver,
+  renderBackgroundEnd,
 } from './canvas';
 
 import {
@@ -37,8 +36,6 @@ document.body.appendChild(canvas);
 const INITIAL_DIRECTION = DIRECTIONS.ArrowRight;
 
 let ticks$ = interval(SPEED);
-
-let click$ = fromEvent(document, 'click');
 let keydown$ = fromEvent(document, 'keydown');
 const scoreFiled = document.getElementById('score');
 
@@ -96,9 +93,8 @@ let game$ = of('Start Game').pipe(
 const startGame = () => game$.subscribe({
   next: (scene) => renderScene(ctx, scene),
   complete: () => {
-    renderGameOver(ctx);
-
-    click$.pipe(first()).subscribe(startGame);
+    renderBackgroundEnd(ctx);
+    timer(500).subscribe(startGame);
   }
 });
 

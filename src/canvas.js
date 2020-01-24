@@ -26,16 +26,6 @@ export function renderSnake(ctx, snake) {
   snake.forEach((segment, index) => paintCell(ctx, wrapBounds(segment), 'black'));
 }
 
-export function renderGameOver(ctx) {
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-  ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-
-  let textX = CANVAS_WIDTH / 2;
-  let textY = CANVAS_HEIGHT / 2;
-
-  drawText(ctx, 'GAME OVER!', textX, textY, 'black', 25);
-}
-
 export function getRandomPosition(snake = []) {
   let position = {
     x: getRandomNumber(0, COLS - 1),
@@ -66,19 +56,9 @@ function renderBackground(ctx) {
   ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
 
-function drawText(ctx, text, x, y, fillStyle,
-  fontSize, horizontalAlign = 'center', verticalAlign = 'middle') {
-
-  ctx.fillStyle = fillStyle;
-  ctx.font = `bold ${fontSize}px sans-serif`;
-
-  let textX = x;
-  let textY = y;
-
-  ctx.textAlign = horizontalAlign;
-  ctx.textBaseline = verticalAlign;
-
-  ctx.fillText(text, textX, textY);
+export function renderBackgroundEnd(ctx) {
+  ctx.fillStyle = 'rgba(255, 0, 0, 0.7)';
+  ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
 
 function wrapBounds(point) {
