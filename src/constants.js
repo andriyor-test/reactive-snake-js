@@ -7,8 +7,8 @@ export const SPEED = 200;
 export const FPS = 60;
 
 export const DIRECTIONS = {
-  37: { x: -1, y: 0 },
-  39: { x: 1, y: 0 },
-  38: { x: 0, y: -1 },
-  40: { x: 0, y: 1 }
+  ArrowLeft: { x: -1, y: 0 },
+  ArrowRight: { x: 1, y: 0 },
+  ArrowUp: { x: 0, y: -1 },
+  ArrowDown: { x: 0, y: 1 }
 };

@@ -38,14 +38,6 @@ import {
   generateApples
 } from './utils';
 
-
-let Key = {
-  LEFT: 37,
-  RIGHT: 39,
-  UP: 38,
-  DOWN: 40
-};
-
 /**
  * Create canvas element and append it to the page
  */
@@ -56,7 +48,7 @@ document.body.appendChild(canvas);
 /**
  * Starting values
  */
-const INITIAL_DIRECTION = DIRECTIONS[Key.RIGHT];
+const INITIAL_DIRECTION = DIRECTIONS.ArrowRight;
 
 let ticks$ = interval(SPEED);
 
@@ -67,7 +59,7 @@ const scoreFiled = document.getElementById('score');
 function createGame(fps$) {
 
   let direction$ = keydown$.pipe(
-    map((event) => DIRECTIONS[event.keyCode]),
+    map(event => DIRECTIONS[event.code]),
     filter(direction => !!direction),
     startWith(INITIAL_DIRECTION),
     scan(nextDirection),
@@ -86,7 +78,6 @@ function createGame(fps$) {
     scan((score, _) => score + POINTS_PER_APPLE),
     tap(score => scoreFiled.innerText = `Score: ${score}`)
   );
-  console.log(score$);
   
   let snake$ = ticks$.pipe(
     withLatestFrom(direction$, snakeLength$, (_, direction, snakeLength) => [direction, snakeLength]),
