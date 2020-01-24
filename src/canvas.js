@@ -19,11 +19,11 @@ export function renderScene(ctx, scene) {
 }
 
 export function renderApples(ctx, apples) {
-  apples.forEach(apple => paintCell(ctx, apple, 'red'));
+  apples.forEach(apple => paintCell(ctx, apple, '#76302a'));
 }
 
 export function renderSnake(ctx, snake) {
-  snake.forEach((segment, index) => paintCell(ctx, wrapBounds(segment), getSegmentColor(index)));
+  snake.forEach((segment, index) => paintCell(ctx, wrapBounds(segment), 'black'));
 }
 
 export function renderGameOver(ctx) {
@@ -62,7 +62,7 @@ function getRandomNumber(min, max) {
 }
 
 function renderBackground(ctx) {
-  ctx.fillStyle = '#EEE';
+  ctx.fillStyle = '#7d8b6d';
   ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
 
@@ -81,10 +81,6 @@ function drawText(ctx, text, x, y, fillStyle,
   ctx.fillText(text, textX, textY);
 }
 
-function getSegmentColor(index) {
-  return index === 0 ? 'black' : '#2196f3';
-}
-
 function wrapBounds(point) {
   point.x = point.x >= COLS ? 0 : point.x < 0 ? COLS - 1 : point.x;
   point.y = point.y >= ROWS ? 0 : point.y < 0 ? ROWS - 1 : point.y;
@@ -98,4 +94,10 @@ function paintCell(ctx, point, color) {
 
   ctx.fillStyle = color;
   ctx.fillRect(x, y, CELL_SIZE, CELL_SIZE);
+  ctx.fillStyle = "#859073";
+  ctx.fillRect(x + 2, y + 2, 6, 6);
+  ctx.fillStyle = color;
+  ctx.fillRect(x + 3.5, y + 3.5, 3, 3);
 }
+
+
