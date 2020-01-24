@@ -1,4 +1,4 @@
-import { Observable ,  BehaviorSubject ,  interval ,  fromEvent ,  combineLatest ,  of } from 'rxjs';
+import { Observable,  BehaviorSubject ,  interval ,  fromEvent ,  combineLatest ,  of } from 'rxjs';
 import { animationFrameScheduler } from 'rxjs';
 
 import {
@@ -17,7 +17,6 @@ import {
 } from 'rxjs/operators';
 
 import { DIRECTIONS, SPEED, SNAKE_LENGTH, FPS, APPLE_COUNT, POINTS_PER_APPLE } from './constants';
-import { Key, Point2D, Scene } from './types';
 
 import {
   createCanvasElement,
@@ -39,6 +38,14 @@ import {
   generateApples
 } from './utils';
 
+
+let Key = {
+  LEFT: 37,
+  RIGHT: 39,
+  UP: 38,
+  DOWN: 40
+};
+
 /**
  * Create canvas element and append it to the page
  */
@@ -55,30 +62,33 @@ let ticks$ = interval(SPEED);
 
 let click$ = fromEvent(document, 'click');
 let keydown$ = fromEvent(document, 'keydown');
+const scoreFiled = document.getElementById('score');
 
-function createGame(fps$: Observable<number>): Observable<Scene> {
+function createGame(fps$) {
 
   let direction$ = keydown$.pipe(
-    map((event: KeyboardEvent) => DIRECTIONS[event.keyCode]),
+    map((event) => DIRECTIONS[event.keyCode]),
     filter(direction => !!direction),
     startWith(INITIAL_DIRECTION),
     scan(nextDirection),
     distinctUntilChanged()
   );
 
-  let length$ = new BehaviorSubject<number>(SNAKE_LENGTH);
+  let length$ = new BehaviorSubject(SNAKE_LENGTH);
 
   let snakeLength$ = length$.pipe(
     scan((step, snakeLength) => snakeLength + step),
     share()
   );
-
+  
   let score$ = snakeLength$.pipe(
     startWith(0),
     scan((score, _) => score + POINTS_PER_APPLE),
+    tap(score => scoreFiled.innerText = `Score: ${score}`)
   );
-
-  let snake$: Observable<Array<Point2D>> = ticks$.pipe(
+  console.log(score$);
+  
+  let snake$ = ticks$.pipe(
     withLatestFrom(direction$, snakeLength$, (_, direction, snakeLength) => [direction, snakeLength]),
     scan(move, generateSnake()),
     share()
@@ -95,7 +105,7 @@ function createGame(fps$: Observable<number>): Observable<Scene> {
     tap(() => length$.next(POINTS_PER_APPLE))
   ).subscribe();
 
-  let scene$: Observable<Scene> = combineLatest(snake$, apples$, score$, (snake, apples, score) => ({ snake, apples, score }));
+  let scene$ = combineLatest(snake$, apples$, score$, (snake, apples, score) => ({ snake, apples, score }));
 
   return fps$.pipe(withLatestFrom(scene$, (_, scene) => scene));
 }

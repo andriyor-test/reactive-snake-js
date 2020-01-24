@@ -4,7 +4,7 @@
   "description": "Snake built with RxJS",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --port 9000 --inline --progress --profile --colors --watch --content-base src/",
+    "start": "webpack-dev-server --port 9001 --inline --progress --profile --colors --watch --content-base src/",
     "build": "webpack --config webpack.config.js",
     "build:prod": "webpack --config webpack.config.js -p"
   },
