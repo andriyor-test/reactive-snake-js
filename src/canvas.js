@@ -27,15 +27,13 @@ export function renderSnake(ctx, snake) {
 }
 
 export function getRandomPosition(snake = []) {
-  let position = {
+  const position = {
     x: getRandomNumber(0, COLS - 1),
     y: getRandomNumber(0, ROWS - 1)
   };
-
   if (isEmptyCell(position, snake)) {
     return position;
   }
-
   return getRandomPosition(snake);
 }
 
@@ -64,7 +62,6 @@ export function renderBackgroundEnd(ctx) {
 function wrapBounds(point) {
   point.x = point.x >= COLS ? 0 : point.x < 0 ? COLS - 1 : point.x;
   point.y = point.y >= ROWS ? 0 : point.y < 0 ? ROWS - 1 : point.y;
-
   return point;
 }
 
