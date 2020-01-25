@@ -13,7 +13,7 @@ import {
   takeWhile,
 } from 'rxjs/operators';
 
-import { DIRECTIONS, SPEED, SNAKE_LENGTH, FPS, POINTS_PER_APPLE } from './constants';
+import { DIRECTIONS, SNAKE_LENGTH, FPS, POINTS_PER_APPLE } from './constants';
 
 import {
   createCanvasElement,
@@ -34,12 +34,23 @@ const canvas = createCanvasElement();
 const ctx = canvas.getContext('2d');
 document.body.appendChild(canvas);
 const INITIAL_DIRECTION = DIRECTIONS.ArrowRight;
-
-const ticks$ = interval(SPEED);
 const keydown$ = fromEvent(document, 'keydown');
 const scoreFiled = document.getElementById('score');
+const radioInput = document.getElementById('radio');
+const input$ = fromEvent(radioInput, 'click');
 
 function createGame(fps$) {
+  const speed = new BehaviorSubject(200);
+  input$.subscribe(e => {
+    if (e.target.tagName === "INPUT") {
+      speed.next(Number(e.target.value))
+    }
+  });
+  
+  const ticks$ = speed.pipe(
+    switchMap(period => interval(period))
+  );
+  
   const direction$ = keydown$.pipe(
     map(event => DIRECTIONS[event.code]),
     filter(direction => !!direction),
@@ -93,6 +104,7 @@ const startGame = () => game$.subscribe({
   next: (scene) => renderScene(ctx, scene),
   complete: () => {
     renderBackgroundEnd(ctx);
+    radioInput.getElementsByClassName('medium')[0].checked = true;
     timer(500).subscribe(startGame);
   }
 });

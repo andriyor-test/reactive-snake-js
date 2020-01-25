@@ -9,10 +9,8 @@ export function isGameOver(scene) {
 }
 
 export function nextDirection(previous, next) {
-  const isOpposite = (previous, next) => {
-    return next.x === previous.x * -1 || next.y === previous.y * -1;
-  };
-  if (isOpposite(previous, next)) {
+  // check opposite direction
+  if (next.x === previous.x * -1 || next.y === previous.y * -1) {
     return previous;
   }
   return next;
