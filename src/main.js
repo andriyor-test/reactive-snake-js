@@ -11,6 +11,7 @@ import {
   skip,
   switchMap,
   takeWhile,
+  debounce
 } from 'rxjs/operators';
 
 import { DIRECTIONS, SNAKE_LENGTH, FPS, POINTS_PER_APPLE } from './constants';
@@ -38,8 +39,17 @@ const keydown$ = fromEvent(document, 'keydown');
 const scoreFiled = document.getElementById('score');
 const radioInput = document.getElementById('radio');
 const input$ = fromEvent(radioInput, 'click');
+const applesInput = document.getElementById('apples');
+const applesSource = fromEvent(applesInput, 'keydown');
+const filterDebounce = applesSource.pipe(debounce(() => timer(500)));
+const apples = new BehaviorSubject(1);
 
 function createGame(fps$) {
+  function onAppleCountChange(e) {
+    apples.next(Number(e.target.value))
+  }
+  filterDebounce.subscribe(onAppleCountChange);
+  
   const speed = new BehaviorSubject(200);
   input$.subscribe(e => {
     if (e.target.tagName === "INPUT") {
@@ -79,7 +89,7 @@ function createGame(fps$) {
   );
 
   const apples$ = snake$.pipe(
-    scan(eat, generateApples()),
+    scan(eat, generateApples(apples.getValue())),
     distinctUntilChanged(),
     share()
   );

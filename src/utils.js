@@ -53,9 +53,9 @@ export function generateSnake() {
   return snake;
 }
 
-export function generateApples() {
+export function generateApples(count) {
   const apples = [];
-  for (let i = 0; i < APPLE_COUNT; i++) {
+  for (let i = 0; i < count; i++) {
     apples.push(getRandomPosition());
   }
   return apples;
