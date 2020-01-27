@@ -1,28 +1,28 @@
 <html>
-<head>
+  <head>
     <meta charset="utf-8">
     <title>Reactive Snake</title>
-</head>
-<body>
+  </head>
+  <body>
     <p id="score"></p>
     
     <div id="radio">
-        Speed:
-        <input id="low" type="radio" name="myRadios" value="300" />
-        <label for="low">Low</label>
-        
-        <input class="medium" id="medium" type="radio" name="myRadios" value="200" checked/>
-        <label for="medium">Medium</label>
+      Speed:
+      <input id="low" type="radio" name="myRadios" value="300" />
+      <label for="low">Low</label>
+      
+      <input class="medium" id="medium" type="radio" name="myRadios" value="200" checked/>
+      <label for="medium">Medium</label>
+      
+      <input id="high" type="radio" name="myRadios" value="100" />
+      <label for="high">High</label>
+    </div>
     
-        <input id="high" type="radio" name="myRadios" value="100" />
-        <label for="high">High</label>
+    <div style="padding: 10px 0">
+      <label for="apples">Count of apples</label>
+      <input type="text" id="apples">
     </div>
 
-    <div style="padding: 10px 0">
-        <label for="apples">Count of apples</label>
-        <input type="text" id="apples">
-    </div>
-    
     <script src="/main.bundle.js"></script>
-</body>
+  </body>
 </html>

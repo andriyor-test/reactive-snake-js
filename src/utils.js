@@ -1,5 +1,5 @@
 import { checkCollision, getRandomPosition } from './canvas';
-import { SNAKE_LENGTH, APPLE_COUNT } from './constants';
+import { SNAKE_LENGTH } from './constants';
 
 export function isGameOver(scene) {
   const snake = scene.snake;

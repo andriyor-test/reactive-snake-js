@@ -23,7 +23,7 @@ export function renderApples(ctx, apples) {
 }
 
 export function renderSnake(ctx, snake) {
-  snake.forEach((segment, index) => paintCell(ctx, wrapBounds(segment), 'black'));
+  snake.forEach((segment, _) => paintCell(ctx, wrapBounds(segment), 'black'));
 }
 
 export function getRandomPosition(snake = []) {
@@ -76,5 +76,3 @@ function paintCell(ctx, point, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x + 3.5, y + 3.5, 3, 3);
 }
-
-
